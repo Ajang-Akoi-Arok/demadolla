@@ -55,9 +55,9 @@ analyze_log() {
 
 # Main script
 echo "Select log file to analyze:"
-echo "1) Heart Rate (heart_rate_log.log)"
-echo "2) Temperature (temperature_log.log)"
-echo "3) Water Usage (water_usage_log.log)"
+echo "1) Heart Rate (heart_rate.log)"
+echo "2) Temperature (temperature.log)"
+echo "3) Water Usage (water_usage.log)"
 echo -n "Enter choice (1-3): "
 read choice
 
@@ -72,12 +72,12 @@ create_report_dir
 
 case $choice in
     1)
-        analyze_log "heart_rate_log.log" "Heart Rate"
+        analyze_log "heart_rate.log" "Heart Rate"
         ;;
     2)
-        analyze_log "temperature_log.log" "Temperature"
+        analyze_log "temperature.log" "Temperature"
         ;;
     3)
-        analyze_log "water_usage_log.log" "Water Usage"
+        analyze_log "water_usage.log" "Water Usage"
         ;;
 esac
