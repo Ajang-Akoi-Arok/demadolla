@@ -45,7 +45,7 @@ def stop():
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python3 heart_rate_monitor.py [start|stop]")
+        print("Usage: python3 heart_monitor.py [start|stop]")
         sys.exit(1)
     
     if sys.argv[1] == "start":

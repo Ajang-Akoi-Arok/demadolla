@@ -6,9 +6,9 @@ from datetime import datetime
 
 # Directory and file configuration
 LOG_DIR = "hospital_data/active_logs"
-LOG_FILE = os.path.join(LOG_DIR, "heart_rate_log.log")
-PID_FILE = "/tmp/heart_rate_monitor.pid"
-DEVICES = ["HeartRate_Monitor_A", "HeartRate_Monitor_B"]
+LOG_FILE = os.path.join(LOG_DIR, "temperature_log.log")
+PID_FILE = "/tmp/temperature_recorder.pid"
+DEVICES = ["Temp_Recorder_A", "Temp_Recorder_B"]
 
 def ensure_log_dir():
     if not os.path.exists(LOG_DIR):
@@ -19,9 +19,9 @@ def log_data():
     while True:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         for device in DEVICES:
-            heart_rate = random.randint(60, 100)
+            temp = round(random.uniform(36.0, 39.5), 1)
             with open(LOG_FILE, "a") as f:
-                f.write(f"{timestamp} {device} {heart_rate}\n")
+                f.write(f"{timestamp} {device} {temp}\n")
         time.sleep(1)
 
 def start():
@@ -45,7 +45,7 @@ def stop():
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python3 heart_rate_monitor.py [start|stop]")
+        print("Usage: python3 temp_sensor.py [start|stop]")
         sys.exit(1)
     
     if sys.argv[1] == "start":

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Analysis script with interactive menu
-LOG_DIR="active_logs"
-REPORT_DIR="reports"
+LOG_DIR="hospital_data/active_logs"
+REPORT_DIR="hospital_data/reports"
 REPORT_FILE="$REPORT_DIR/analysis_report.txt"
 
 # Function to create reports directory
@@ -29,13 +29,13 @@ analyze_log() {
     echo "Generated: $(date)" >> "$REPORT_FILE"
     echo "========================================" >> "$REPORT_FILE"
     
-    # Count occurrences of each device
+    # Count occurrences of each device using awk, sort, uniq
     echo "Device Statistics:" >> "$REPORT_FILE"
     awk '{print $3}' "$LOG_DIR/$log_file" | sort | uniq -c | while read count device; do
         echo "  $device: $count entries" >> "$REPORT_FILE"
     done
     
-    # Get first and last timestamps (bonus)
+    # Get first and last timestamps (bonus feature)
     first_entry=$(head -n 1 "$LOG_DIR/$log_file")
     last_entry=$(tail -n 1 "$LOG_DIR/$log_file")
     
@@ -55,27 +55,29 @@ analyze_log() {
 
 # Main script
 echo "Select log file to analyze:"
-echo "1) Heart Rate (heart_rate.log)"
-echo "2) Temperature (temperature.log)"
-echo "3) Water Usage (water_usage.log)"
+echo "1) Heart Rate (heart_rate_log.log)"
+echo "2) Temperature (temperature_log.log)"
+echo "3) Water Usage (water_usage_log.log)"
 echo -n "Enter choice (1-3): "
 read choice
+
+# Validate user input
+if [[ ! "$choice" =~ ^[1-3]$ ]]; then
+    echo "Error: Invalid choice. Please enter 1, 2, or 3."
+    exit 1
+fi
 
 # Create report directory
 create_report_dir
 
 case $choice in
     1)
-        analyze_log "heart_rate.log" "Heart Rate"
+        analyze_log "heart_rate_log.log" "Heart Rate"
         ;;
     2)
-        analyze_log "temperature.log" "Temperature"
+        analyze_log "temperature_log.log" "Temperature"
         ;;
     3)
-        analyze_log "water_usage.log" "Water Usage"
-        ;;
-    *)
-        echo "Error: Invalid choice. Please enter 1, 2, or 3."
-        exit 1
+        analyze_log "water_usage_log.log" "Water Usage"
         ;;
 esac
