@@ -27,7 +27,9 @@ archive_log() {
     timestamp=$(date +"%Y-%m-%d_%H:%M:%S")
     
     # Create archive filename (remove .log and add timestamp)
-    base_name=$(echo "$log_file" | sed 's/.log$//')    
+    base_name=$(echo "$log_file" | sed 's/.log$//')
+    archive_name="${base_name}_${timestamp}.log"
+    
     echo "Archiving $log_file..."
     
     # Move log file to archive with timestamp
